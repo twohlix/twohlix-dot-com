@@ -16,9 +16,9 @@ So I had a little snippet of code that a coworker of mine mentioned I could repl
 <pre>collection_thingy.each do |val|
   return if val.prop == :particular_thing
 end</pre>
-with:</p>
+with:
 <pre>return if collection_thingy.any? { |val| val.prop == :particular_thing }</pre>
-And that got me thinking about which was faster. So I did some quick benchmarking. Results and code are embedded below.</p>
+And that got me thinking about which was faster. So I did some quick benchmarking. Results and code are embedded below.
 <p><script src="https://gist.github.com/twohlix/e103633365933380a105.js"></script></p>
 <p>Clearly Array#each is faster than using the equivalent Enumerable#any?, and by 13-28% depending on the array size. That seems like a lot. I'm not enitrely sure why it's that much faster but it's interesting. Still, for most cases there is a negligble difference (especially in a Rails app), just be aware of the difference if you're traversing giant arrays (on 1Billion elements its as much as 14 second difference in my environment).</p>
 <p>Here are some graphs showing the speedup more visually (<a href="http://imgur.com/a/dwY4b">imgur album of graphs</a>):
